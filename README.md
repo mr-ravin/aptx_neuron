@@ -73,7 +73,7 @@ pip install git+https://github.com/mr-ravin/aptx_neuron.git
 ## Usage
 <b>1</b>. APTx Neuron-based Layer with all $\alpha_i$, $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
 
-The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension.
+The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension. Note: The default value of is_alpha_trainable is True.
 
 ```
 import aptx_neuron
@@ -81,8 +81,6 @@ input_dim = 8  # assuming input vector to be of dimension 8.
 output_dim = 1 # assuming output dimension equals 1.
 
 aptx_neuron_layer = aptx_neuron.aptx_layer(input_dim=input_dim, output_dim=output_dim, is_alpha_trainable=True)
-                    
-# note: default value of is_alpha_trainable is True.
 ```
 
 <b>2</b>. APTx Neuron-based Layer with $\alpha_i=1$ (not trainable); While $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
