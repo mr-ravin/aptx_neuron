@@ -93,6 +93,7 @@ The setting `is_alpha_trainable = False` makes $\alpha_i$ fixed (non-trainable).
 import aptx_neuron
 input_dim = 8  # assuming input vector to be of dimension 8.
 output_dim = 1 # assuming output dimension equals 1.
+
 aptx_neuron_layer = aptx_neuron.aptx_layer(input_dim=input_dim, output_dim=output_dim, is_alpha_trainable=False)  # α_i is fixed (not trainable)
 ```
 
