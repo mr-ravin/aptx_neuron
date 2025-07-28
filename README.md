@@ -1,5 +1,5 @@
 ## APTx Neuron 
-This repository offers a Python code for the PyTorch implementation of the APTx Neuron and experimentation on MNIST dataset, as introduced in the paper "APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation".
+This repository offers a Python code for the PyTorch implementation of the APTx Neuron, as introduced in the paper "APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation".
 
 **Paper Title**: APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation
 
