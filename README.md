@@ -262,7 +262,7 @@ This work introduced the APTx Neuron, a unified, fully trainable neural unit tha
 
 ### 📜 Copyright License
 
-```python
+```text
 Copyright (c) 2025 Ravin Kumar
 Website: https://mr-ravin.github.io
 
