@@ -127,7 +127,7 @@ input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
 output_tensor = aptx_neuron_unit(input_tensor)     # dimension: [3, 1]
 ```
 
-<b>4</b>. SSingle APTx Neuron with fixed $\alpha_i=1$ and trainable $\beta_i$, $\gamma_i$, and $\delta$:
+<b>4</b>. Single APTx Neuron with fixed $\alpha_i=1$ and trainable $\beta_i$, $\gamma_i$, and $\delta$:
 
 The setting `is_alpha_trainable = False` makes $\alpha_i$ fixed (non-trainable). Each APTx neuron will then have $(2n + 1)$ trainable parameters, thus reducing memory and training time per epoch. Here, $n$ is input dimension.
 
