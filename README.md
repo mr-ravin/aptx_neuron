@@ -74,7 +74,7 @@ pip install git+https://github.com/mr-ravin/aptx_neuron.git
 
 ## Usage
 
-<b>1</b>. APTx Neuron-based Layer with all $\alpha_i$, $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
+<b>1</b>. APTx Neuron-based Layer with all $\alpha_i$, $\beta_i$, $\gamma_i$, and $\delta$ are trainable:
 
 The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension. Note: The default value of `is_alpha_trainable` is `True`. 
 
@@ -92,7 +92,7 @@ input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
 output_tensor = aptx_neuron_layer(input_tensor)    # dimension: [3, 2]
 ```
 
-<b>2</b>. APTx Neuron-based Layer with $\alpha_i=1$ (not trainable); While $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
+<b>2</b>. APTx Neuron-based Layer with $\alpha_i=1$ (not trainable); While $\beta_i$, $\gamma_i$, and $\delta$ are trainable:
 
 The setting `is_alpha_trainable = False` makes $\alpha_i$ fixed (non-trainable). Each APTx neuron will then have $(2n + 1)$ trainable parameters, thus reducing memory and training time per epoch. Here, $n$ is input dimension.
 
