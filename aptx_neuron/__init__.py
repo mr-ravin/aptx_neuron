@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 # -----------------------------------
 # APTx Neuron
