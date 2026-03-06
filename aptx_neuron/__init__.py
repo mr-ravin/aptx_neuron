@@ -1,19 +1,19 @@
 import torch
 import torch.nn as nn
 
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 
 # -----------------------------------
 # APTx Neuron
 # -----------------------------------
 class aptx_neuron(nn.Module):
     def __init__(self, input_dim, is_alpha_trainable=True):
-        super(aptx_neuron, self).__init__()
+        super().__init__()
         if is_alpha_trainable:
-            self.alpha = nn.Parameter(torch.randn(input_dim)) 
+            self.alpha = nn.Parameter(torch.randn(input_dim))
         else:
-            self.register_buffer('alpha', torch.ones(input_dim)) # To reduce trainable parameters from 3n + 1 to 2n + 1 (where n is the input dimension), replace with: self.alpha = torch.ones(input_dim)  # (fix α_i = 1 to make it non-trainable)
-        self.beta  = nn.Parameter(torch.randn(input_dim))
+            self.register_buffer('alpha', torch.ones(input_dim))
+        self.beta = nn.Parameter(torch.randn(input_dim))
         self.gamma = nn.Parameter(torch.randn(input_dim))
         self.delta = nn.Parameter(torch.zeros(1))
 
@@ -22,14 +22,33 @@ class aptx_neuron(nn.Module):
         y = nonlinear.sum(dim=1, keepdim=True) + self.delta
         return y
 
+
 # -----------------------------------
-# APTx Layer (Multiple Neurons)
+# APTx Layer (Vectorized Multiple Neurons)
 # -----------------------------------
 class aptx_layer(nn.Module):
     def __init__(self, input_dim, output_dim, is_alpha_trainable=True):
-        super(aptx_layer, self).__init__()
-        self.neurons = nn.ModuleList([aptx_neuron(input_dim, is_alpha_trainable) for _ in range(output_dim)])
+        super().__init__()
+        self.input_dim = input_dim
+        self.output_dim = output_dim
+
+        if is_alpha_trainable:
+            self.alpha = nn.Parameter(torch.randn(output_dim, input_dim))
+        else:
+            self.register_buffer('alpha', torch.ones(output_dim, input_dim))
+
+        self.beta = nn.Parameter(torch.randn(output_dim, input_dim))
+        self.gamma = nn.Parameter(torch.randn(output_dim, input_dim))
+        self.delta = nn.Parameter(torch.zeros(output_dim))
 
     def forward(self, x):  # x: [batch_size, input_dim]
-        outputs = [neuron(x) for neuron in self.neurons]  # list of [batch_size, 1]
-        return torch.cat(outputs, dim=1)  # [batch_size, output_dim]
+        # x -> [batch_size, 1, input_dim]
+        x_exp = x.unsqueeze(1)
+
+        nonlinear = (
+            self.alpha + torch.tanh(self.beta.unsqueeze(0) * x_exp)
+        ) * self.gamma.unsqueeze(0) * x_exp
+
+        # [batch_size, output_dim]
+        y = nonlinear.sum(dim=2) + self.delta
+        return y
