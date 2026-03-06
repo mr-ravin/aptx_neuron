@@ -1,5 +1,5 @@
 ## APTx Neuron 
-This repository offers a Python code for the PyTorch implementation of the APTx Neuron, as introduced in the paper "APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation".
+This repository provides a PyTorch implementation of the APTx Neuron, as introduced in the paper "APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation".
 
 **Paper Title**: APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation
 
@@ -73,14 +73,20 @@ pip install git+https://github.com/mr-ravin/aptx_neuron.git
 ## Usage
 <b>1</b>. APTx Neuron-based Layer with all $\alpha_i$, $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
 
-The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension. Note: The default value of `is_alpha_trainable` is `True`.
+The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension. Note: The default value of `is_alpha_trainable` is `True`. 
 
 ```
 import aptx_neuron
+import torch
+
 input_dim = 8  # assuming input vector to be of dimension 8.
-output_dim = 1 # assuming output dimension equals 1.
+output_dim = 2 # assuming output dimension equals 2.
 
 aptx_neuron_layer = aptx_neuron.aptx_layer(input_dim=input_dim, output_dim=output_dim, is_alpha_trainable=True)
+
+batch_size = 3 # assuming batch size is 3
+input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
+output_tensor = aptx_neuron_layer(input_tensor)    # dimension: [3, 2]
 ```
 
 <b>2</b>. APTx Neuron-based Layer with $\alpha_i=1$ (not trainable); While $\beta_i$, $\gamma_i$, and $\delta$ as trainable:
@@ -89,10 +95,159 @@ The setting `is_alpha_trainable = False` makes $\alpha_i$ fixed (non-trainable).
 
 ```
 import aptx_neuron
+import torch
+
 input_dim = 8  # assuming input vector to be of dimension 8.
-output_dim = 1 # assuming output dimension equals 1.
+output_dim = 2 # assuming output dimension equals 2.
 
 aptx_neuron_layer = aptx_neuron.aptx_layer(input_dim=input_dim, output_dim=output_dim, is_alpha_trainable=False)  # α_i is fixed (not trainable)
+
+batch_size = 3 # assuming batch size is 3
+input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
+output_tensor = aptx_neuron_layer(input_tensor)    # dimension: [3, 2]
+```
+
+<b>3</b>. Single APTx Neuron with trainable $\alpha_i$, $\beta_i$, $\gamma_i$, and $\delta$:
+
+The setting `is_alpha_trainable = True` keeps $\alpha_i$ trainable. Each APTx neuron will have $(3n + 1)$ trainable parameters, where $n$ is input dimension. Note: The default value of `is_alpha_trainable` is `True`.
+
+```
+import aptx_neuron
+import torch
+
+input_dim = 8  # assuming input vector to be of dimension 8.
+
+aptx_neuron_unit = aptx_neuron.aptx_neuron(input_dim=input_dim, is_alpha_trainable=True)
+
+batch_size = 3 # assuming batch size is 3
+input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
+output_tensor = aptx_neuron_unit(input_tensor)     # dimension: [3, 1]
+```
+
+<b>4</b>. SSingle APTx Neuron with fixed $\alpha_i=1$ and trainable $\beta_i$, $\gamma_i$, and $\delta$:
+
+The setting `is_alpha_trainable = False` makes $\alpha_i$ fixed (non-trainable). Each APTx neuron will then have $(2n + 1)$ trainable parameters, thus reducing memory and training time per epoch. Here, $n$ is input dimension.
+
+```
+import aptx_neuron
+import torch
+
+input_dim = 8  # assuming input vector to be of dimension 8.
+
+aptx_neuron_unit = aptx_neuron.aptx_neuron(input_dim=input_dim, is_alpha_trainable=False)  # α_i is fixed (not trainable)
+
+batch_size = 3 # assuming batch size is 3
+input_tensor = torch.ones((batch_size, input_dim)) # dimension: [3, 8]
+output_tensor = aptx_neuron_unit(input_tensor)    # dimension: [3, 1]
+```
+
+> For a layer with `output_dim = m`, the total number of trainable parameters is **m(3n + 1)** when `α_i` is trainable, or **m(2n + 1)** when `α_i = 1` is fixed. Here, **n** is the input dimension (i.e., `input_dim`) and **m** is the number of neurons in the layer (i.e., `output_dim`).
+
+----
+## Working Demonstration
+
+- #### Example: APTx Neuron Unit
+
+```
+import torch
+import torch.nn as nn
+from aptx_neuron import aptx_neuron
+
+# Create single neuron
+model = aptx_neuron(input_dim=4)
+
+# Input (batch_size=3, input_dim=4)
+x = torch.tensor([
+    [1., 2., 3., 4.],
+    [5., 6., 7., 8.],
+    [9., 10., 11., 12.]
+])
+
+# Target output (batch_size=3, 1)
+target = torch.tensor([
+    [1.0],
+    [2.0],
+    [3.0]
+])
+
+# Forward pass
+y = model(x) # shape: [3, 1]
+
+# Compute loss
+loss_fn = nn.MSELoss()
+loss = loss_fn(y, target)
+
+# Backward pass
+loss.backward()
+
+print("Output:")
+print(y)
+
+print("\nLoss:", loss.item())
+
+if model.alpha.grad is not None:
+    print("\nGradient alpha:")
+    print(model.alpha.grad)
+else:
+    print("\nAlpha is not trainable (no gradient).")
+
+print("\nGradient beta:")
+print(model.beta.grad)
+
+print("\nGradient gamma:")
+print(model.gamma.grad)
+
+print("\nGradient delta:")
+print(model.delta.grad)
+```
+
+- #### Example: APTx Neuron Layer
+
+```
+import torch
+import torch.nn as nn
+from aptx_neuron import aptx_layer
+
+# Create APTx layer
+model = aptx_layer(input_dim=4, output_dim=2)
+
+# Input (batch_size=3, input_dim=4)
+x = torch.tensor([
+    [1., 2., 3., 4.],
+    [5., 6., 7., 8.],
+    [9., 10., 11., 12.]
+])
+
+# Target output (batch_size=3, output_dim=2)
+target = torch.tensor([
+    [1., 2.],
+    [3., 4.],
+    [5., 6.]
+])
+
+# Forward pass
+y = model(x) # shape: [3, 2]
+
+# Loss
+loss_fn = nn.MSELoss()
+loss = loss_fn(y, target)
+
+# Backward
+loss.backward()
+
+print("Output:")
+print(y)
+
+print("\nLoss:", loss.item())
+
+if model.alpha.grad is not None:
+    print("\nGradient alpha shape:", model.alpha.grad.shape)
+else:
+    print("\nAlpha is not trainable (no gradient).")
+
+print("\nGradient beta shape:", model.beta.grad.shape)
+print("Gradient gamma shape:", model.gamma.grad.shape)
+print("Gradient delta shape:", model.delta.grad.shape)
 ```
 
 ----
