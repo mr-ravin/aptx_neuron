@@ -23,6 +23,7 @@ class aptx_neuron(nn.Module):
 
     def forward(self, x):  # x: [batch_size, input_dim]
         nonlinear = (self.alpha + torch.tanh(self.beta * x)) * self.gamma * x
+        # [batch_size, output_dim]
         y = nonlinear.sum(dim=1, keepdim=True)
         if self.use_delta:
             y = y + self.delta
@@ -52,11 +53,9 @@ class aptx_layer(nn.Module):
     def forward(self, x):  # x: [batch_size, input_dim]
         # x -> [batch_size, 1, input_dim]
         x_exp = x.unsqueeze(1)
-
         nonlinear = (
             self.alpha + torch.tanh(self.beta.unsqueeze(0) * x_exp)
         ) * self.gamma.unsqueeze(0) * x_exp
-
         # [batch_size, output_dim]
         y = nonlinear.sum(dim=2)
         if self.use_delta:
