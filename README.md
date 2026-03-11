@@ -148,7 +148,7 @@ output_tensor = aptx_neuron_unit(input_tensor)    # dimension: [3, 1]
 
 #### Important: 
 
-If one do not want to use $\delta$ (i.e., bias is not required) then one can set `use_delta = False` (default value of use_delta is True). We can disable $\delta$ in both `aptx neuron unit` and `aptx layer` as: `aptx_neuron(input_dim=input_dim, use_delta=False)` and `aptx_layer(input_dim=input_dim, output_dim=output_dim, use_delta=False)` respectively.
+If one do not want to use $\delta$ (i.e., bias is not required) then one can set `use_delta = False` (default value of `use_delta` is `True`). We can disable $\delta$ in both `aptx neuron unit` and `aptx layer` as: `aptx_neuron(input_dim=input_dim, use_delta=False)` and `aptx_layer(input_dim=input_dim, output_dim=output_dim, use_delta=False)` respectively.
 
 ----
 ## Working Demonstration
