@@ -5,9 +5,13 @@ This repository provides a PyTorch implementation of the APTx Neuron, as introdu
 
 **Author**: [Ravin Kumar](https://mr-ravin.github.io)
 
-**Sources**:
-- [Arxiv.org](https://arxiv.org/abs/2507.14270)
-- [Research Gate](https://www.researchgate.net/publication/393889376_APTx_Neuron_A_Unified_Trainable_Neuron_Architecture_Integrating_Activation_and_Computation)
+**Paper available at**:
+- Publication
+  - [Springer Publication](https://doi.org/10.1007/978-3-032-27157-0_13)
+- Preprints
+  - [Arxiv.org](https://arxiv.org/abs/2507.14270)
+  - [Research Gate](https://www.researchgate.net/publication/393889376_APTx_Neuron_A_Unified_Trainable_Neuron_Architecture_Integrating_Activation_and_Computation)
+  - [SSRN](https://papers.ssrn.com/abstract=5364841)
   
 #### Github Repositories: 
 - **APTx Neuron** (Pytorch + PyPI Package): [APTx Neuron](https://github.com/mr-ravin/aptx_neuron)
@@ -16,18 +20,8 @@ This repository provides a PyTorch implementation of the APTx Neuron, as introdu
 
 #### Cite Paper as:
 ```
-Kumar, Ravin. "APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation." arXiv preprint arXiv:2507.14270 (2025).
-```
-Or,
-```
-@article{kumar2025aptx,
-  title={APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation},
-  author={Kumar, Ravin},
-  journal={arXiv preprint arXiv:2507.14270},
-  year={2025}
-}
-```
- 
+Kumar, R. (2026). APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation. In: Senjyu, T., Mahmud, M., Joshi, A. (eds) Smart Trends in Computing and Communications. SmartCom 2026. Lecture Notes in Networks and Systems, vol 1993. Springer, Cham. https://doi.org/10.1007/978-3-032-27157-0_13
+``` 
 ---
 ### APTx Neuron
 
