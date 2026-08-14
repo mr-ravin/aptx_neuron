@@ -251,6 +251,39 @@ print("\nGradient gamma shape:", model.gamma.grad.shape)
 print("\nGradient delta shape:", model.delta.grad.shape)
 ```
 
+- #### Example: APTx Activation Function
+  
+1. APTx Activation Function with parameters values (On Default Device):
+```python
+import torch
+from aptx_neuron import aptx_activation_function
+
+# Example Usage
+aptx_activation_fn = aptx_activation_function(alpha=1.0, beta=1.0, gamma=0.5) # default values in APTx Activation Function (trainable = False)
+tensor = torch.randn(5)
+output = aptx_activation_fn(tensor)
+print(output)
+```
+
+2. APTx Activation Function with parameters values (On On GPU Device):
+```python
+import torch
+from aptx_neuron import aptx_activation_function
+
+# Example Usage
+aptx_activation_fn = aptx_activation_function(alpha=1.0, beta=1.0, gamma=0.5).to("cuda") # default values in APTx Activation Function (trainable = False)
+tensor = torch.randn(5).to("cuda")
+output = aptx_activation_fn(tensor)
+print(output)
+```
+
+3. APTx Activation Function with trainable parameters
+APTx Activation Function allows for trainable parameters to adapt dynamically during training when `trainable` is set to `True`:
+```python
+from aptx_neuron import aptx_activation_function
+aptx_activation_fn = aptx_activation_function(trainable=True)  # Learnable α, β, and γ
+```
+
 ----
 #### Conclusion
 
