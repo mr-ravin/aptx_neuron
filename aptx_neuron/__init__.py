@@ -44,7 +44,7 @@ class aptx_activation_function(nn.Module):
 # APTx Neuron
 # -----------------------------------
 class aptx_neuron(nn.Module):
-    r"""
+    r"""APTx Neuron
     Research Paper:: APTx Neuron: A Unified Trainable Neuron Architecture Integrating Activation and Computation
     DOI Link: https://doi.org/10.1007/978-3-032-27157-0_13
     Arxiv: https://arxiv.org/abs/2507.14270
