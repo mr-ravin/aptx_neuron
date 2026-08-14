@@ -6,9 +6,9 @@ This repository provides a PyTorch implementation of the APTx Neuron, as introdu
 **Author**: [Ravin Kumar](https://mr-ravin.github.io)
 
 **Paper available at**:
-- Publication
+- Publication:
   - [Springer Publication](https://doi.org/10.1007/978-3-032-27157-0_13)
-- Preprints
+- Preprints:
   - [Arxiv.org](https://arxiv.org/abs/2507.14270)
   - [Research Gate](https://www.researchgate.net/publication/393889376_APTx_Neuron_A_Unified_Trainable_Neuron_Architecture_Integrating_Activation_and_Computation)
   - [SSRN](https://papers.ssrn.com/abstract=5364841)
