@@ -253,7 +253,7 @@ print("\nGradient delta shape:", model.delta.grad.shape)
 
 - #### Example: APTx Activation Function
   
-1. APTx Activation Function with parameters values (On Default Device):
+1. APTx Activation Function with parameters values (On Default Device; likely CPU):
 ```python
 import torch
 from aptx_neuron import aptx_activation_function
@@ -265,7 +265,7 @@ output = aptx_activation_fn(tensor)
 print(output)
 ```
 
-2. APTx Activation Function with parameters values (On On GPU Device):
+2. APTx Activation Function with parameters values (On GPU Device):
 ```python
 import torch
 from aptx_neuron import aptx_activation_function
